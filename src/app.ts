@@ -3,27 +3,25 @@ import TodoList from "./TodoApp/TodoInterface.js";
 import { v4 as uuidv4 } from "https://esm.sh/uuid@11.0.5";
 
 // Get all the inputs from html using querySeletor
-// const addTodo = <HTMLButtonElement>document.querySelector('.add-todo-btn')
 const inputTodo = <HTMLInputElement>document.querySelector('.todo-input')
 const formTodo = <HTMLFormElement>document.querySelector('.todo-form')
 const todoList = <HTMLUListElement>document.querySelector('.todo-list')
 const clearTodo = <HTMLButtonElement>document.querySelector('.clear-btn')
 
+const handleListing = async () => {
+    await handleDynamicTodoElement()
+}
+
 const handleSubmit = async (e: Event) => {
     e.preventDefault()
     let uuid = uuidv4()
     let task: TodoList = { id: uuid, title: inputTodo.value, isCompleted: false, createdAt: Date.now() }
-    let addTask = createTodo(uuid, task)
+    let addTask = await createTodo(uuid, task)
     if (addTask) {
         inputTodo.value = ''
         await handleDynamicTodoElement(addTask.id)
         alert(addTask.message)
     }
-}
-
-const handleListing = async (e: Event) => {
-    e.preventDefault()
-    await handleDynamicTodoElement()
 }
 
 const handleDynamicTodoElement = async (id?: string) => {
@@ -37,7 +35,6 @@ const handleDynamicTodoElement = async (id?: string) => {
         newCheckbox.name = 'isCompleted'
         newCheckbox.className = 'todo-checkbox'
         newCheckbox.checked = newTodo.isCompleted
-        // newCheckbox.id = newTodo.id
         newCheckbox.value = newTodo.title
         newCheckbox.type = 'checkbox'
 
@@ -50,6 +47,9 @@ const handleDynamicTodoElement = async (id?: string) => {
             newSpan.textContent = newTodo.title;
         }
 
+        const newSamp = <HTMLElement>document.createElement('samp')
+        newSamp.textContent = new Date(newTodo.createdAt).toLocaleString()
+
         // const newButton = <HTMLButtonElement>document.createElement('button');
         // newButton.type = 'button'
         // newButton.textContent = 'Delete'
@@ -60,14 +60,13 @@ const handleDynamicTodoElement = async (id?: string) => {
 
         newList.appendChild(newCheckbox);
         newList.appendChild(newSpan);
+        newList.appendChild(newSamp);
         newList.appendChild(newButton)
-
         todoList.append(newList)
     })
 }
 
 const handleCheckbox = async (e: Event) => {
-    console.log('handleCheckbox', e.type);
     let checkBoxData = <HTMLElement>e.target
     let liElem = <HTMLElement>checkBoxData.closest('li')
     let inputElem = <HTMLInputElement>liElem?.querySelector('input')
@@ -93,7 +92,7 @@ const handleCheckbox = async (e: Event) => {
 }
 
 const handleClearAllTodo = async (e: Event) => {
-    let deletedTodos = deleteTodo()
+    let deletedTodos = await deleteTodo()
     if (deletedTodos) {
         await removeLiElement()
         alert(deletedTodos.message)
@@ -101,15 +100,13 @@ const handleClearAllTodo = async (e: Event) => {
 }
 
 const handleDeleteTodo = async (e: Event) => {
-    console.log('handleDeleteTodo', e.type);
     let deletedTodoBtn = <HTMLElement>e.target
     let liElem = <HTMLElement>deletedTodoBtn.closest('li')
-    let deletedTodo = deleteTodo(liElem.id)
+    let deletedTodo = await deleteTodo(liElem.id)
     if (deletedTodo) {
         await removeLiElement(liElem.id)
         alert(deletedTodo.message)
     }
-
 }
 
 const removeLiElement = (id?: string) => {
@@ -126,14 +123,13 @@ const removeLiElement = (id?: string) => {
 
 formTodo.addEventListener('submit', e => handleSubmit(e))
 
-window.addEventListener('load', e => handleListing(e))
+window.addEventListener('load', handleListing)
 
 todoList.addEventListener('input', (e: Event) => {
     const target = e.target as HTMLElement;
     if (target && target.classList.contains('todo-checkbox')) {
         handleCheckbox(e);
     }
-    // e.stopImmediatePropagation()
 })
 
 todoList.addEventListener('click', (e: Event) => {
@@ -143,34 +139,4 @@ todoList.addEventListener('click', (e: Event) => {
     }
 });
 
-// removeTodo.forEach(button => {
-//     button.addEventListener('click', (e: MouseEvent) => {
-//         handleDeleteTodo(e);
-//     });
-// });
-
 clearTodo.addEventListener('click', e => handleClearAllTodo(e))
-
-// import { createTodo, readTodo, findOneTodo, updateTodo } from "./TodoApp/TodoApp";
-// import TodoList from "./TodoApp/TodoInterface";
-
-// let task: TodoList = { id: 1, title: 'Task 1', iscompleted: false }
-
-// createTodo(task)
-
-// let allTodos = readTodo()
-
-// console.log('allTodos', allTodos)
-
-// let findTodo = findOneTodo(1)
-
-// console.log('findTodo', findTodo);
-
-// let updateTodos = updateTodo(1, 'Task 1', true)
-
-
-// let findTodos = findOneTodo(1)
-
-// console.log('findTodos', findTodos);
-
-
