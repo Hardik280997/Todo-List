@@ -1,0 +1,157 @@
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #153677, #4e085f);
+    padding: 10px;
+}
+
+.sub-container {
+    width: 100%;
+    max-width: 540px;
+    background: #fff;
+    margin: 100px auto 30px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+}
+
+.sub-container h1 {
+    color: #153677;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.todoapp {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoapp form {
+    width: 78%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: lightgrey;
+    border-radius: 30px;
+    padding-left: 10px;
+}
+
+.todoapp form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    font-weight: 14px;
+}
+
+.todoapp form button {
+    border: none;
+    outline: none;
+    padding: 16px 50px;
+    background: red;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+.clear-btn {
+    width: 18%;
+    border: none;
+    outline: none;
+    padding: 8px 0px;
+    background: red;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+.todo-list {
+    list-style: none;
+}
+
+.todo-list li {
+    padding: 8px 12px 8px 12px;
+    margin: 0%;
+}
+
+.todo-list li span {
+    font-size: 18px;
+    word-wrap: break-word;
+}
+
+.todo-list li samp {
+    font-size: 10px;
+    color: lightslategray;
+}
+
+/* .delete-todo {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+} */
+
+.delete-todo {
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.delete-todo:hover {
+    color: #f44336;
+}
+
+/* .todo-checkbox {
+    display: none;
+}
+
+.todo-list li label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+.todo-list li label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.todo-checkbox:checked+label::before {
+    background-color: #4caf50;
+    border-color: #4caf50;
+}
+
+.todo-checkbox:checked+label::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+} */
